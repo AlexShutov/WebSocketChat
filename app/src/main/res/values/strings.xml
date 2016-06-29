@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WebSocketChat</string>
+    <string name="base_url_address">http://173.233.68.166:3002</string>
 </resources>

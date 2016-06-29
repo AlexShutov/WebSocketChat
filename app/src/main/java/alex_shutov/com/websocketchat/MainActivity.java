@@ -1,5 +1,6 @@
 package alex_shutov.com.websocketchat;
 
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import alex_shutov.com.websocketchat.Web.LoginManager;
+import alex_shutov.com.websocketchat.Web.SocketManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,18 +20,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button btn = (Button) findViewById(R.id.btnTest);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btn.setOnClickListener(v -> {
                 testSocket();
-            }
-        });
+
+
+            });
     }
 
     void testSocket(){
         Log.i(LOG_TAG, "Test buttom pressed");
-        LoginManager lm = new LoginManager(this);
-        lm.test();
+        ChatApplication app = (ChatApplication) getApplication();
+        LoginManager lm = app.getLoginManager();
+        //lm.test();
+
+        SocketManager sm = app.getSocketManager();
+        sm.testConnection();
     }
 
 }
