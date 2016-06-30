@@ -64,7 +64,7 @@ public class LoginManager {
         LoginData ld = new LoginData();
         ld.setVendor("Local");
         ld.setUsername("testuser");
-        ld.setPassword("300000");
+        ld.setPassword("400000");
 
         loginApi.login(ld)
                 .subscribeOn(Schedulers.io())

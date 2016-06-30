@@ -5,6 +5,12 @@ import android.util.EventLog;
 import android.util.Log;
 import android.util.Printer;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URISyntaxException;
+
+import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
@@ -43,12 +49,7 @@ public class SocketManager {
             }
         });
 
-        socketСlient.on("getMyInfo", new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                Log.i(LOG_TAG, "'getMyInfo' callback fired");
-            }
-        });
+        socketСlient.on("getMyInfo", onMyInfo);
 
         socketСlient.on("authenticate", new Emitter.Listener() {
             @Override
@@ -65,14 +66,13 @@ public class SocketManager {
      * @return new socket instance
      */
     Socket createSocket(String baseUrl, String token){
-        /**
+
         JSONObject params = new JSONObject();
         try {
             params.put("token", token);
         }catch (JSONException e){}
 
         IO.Options options = new IO.Options();
-        options.forceNew = true;
         options.query = params.toString();
         Socket client = null;
         try {
@@ -81,12 +81,7 @@ public class SocketManager {
             throw new RuntimeException(e);
         }
         return client;
-         */
 
-
-
-
-        return null;
     }
     
 
@@ -95,7 +90,7 @@ public class SocketManager {
         public void call(Object... args) {
             int N = 20;
             Log.i(LOG_TAG, "onConnect ");
-            socketСlient.emit("getMyInfo", onMyInfo);
+            socketСlient.emit("getMyInfo", "EufnYTZAuc");
         }
     };
 
