@@ -19,22 +19,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btn = (Button) findViewById(R.id.btnTest);
+        Button btn = (Button) findViewById(R.id.btnTestLogin);
         btn.setOnClickListener(v -> {
-                testSocket();
-
-
+                testLogin();
             });
+        btn = (Button) findViewById(R.id.btnTestConnect);
+        btn.setOnClickListener(v -> {
+            testConect();
+        });
     }
 
-    void testSocket(){
+    void testLogin(){
         Log.i(LOG_TAG, "Test buttom pressed");
         ChatApplication app = (ChatApplication) getApplication();
         LoginManager lm = app.getLoginManager();
-        //lm.test();
+        lm.test();
 
+    }
+
+    void testConect(){
+        ChatApplication app = (ChatApplication) getApplication();
         SocketManager sm = app.getSocketManager();
         sm.testConnection();
+
     }
 
 }

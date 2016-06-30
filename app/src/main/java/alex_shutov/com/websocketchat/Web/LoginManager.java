@@ -24,7 +24,7 @@ import rx.schedulers.Schedulers;
  */
 public class LoginManager {
     public static final String LOG_TAG = LoginManager.class.getSimpleName();
-    public static final String CHAT_SERVER_URL = "http://173.233.68.166:3002/api/";
+    public static final String CHAT_SERVER_URL = "http://173.233.68.166:3002/";
     private static final String PREFS_KEY_TOKEN = "PREFS_KEY_TOKEN";
 
     private Context context;

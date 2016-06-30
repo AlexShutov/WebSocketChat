@@ -5,13 +5,6 @@ import android.util.EventLog;
 import android.util.Log;
 import android.util.Printer;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.net.URISyntaxException;
-
-import alex_shutov.com.websocketchat.R;
-import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
@@ -23,11 +16,15 @@ public class SocketManager {
     private Context context;
     private String baseUrl;
     Socket socketСlient;
+    String token;
 
     public SocketManager(Context context){
         this.context = context;
         baseUrl = "http://173.233.68.166:3002";
-        String token = LoginManager.getToken(context);
+    }
+
+    public void connect(){
+        token = LoginManager.getToken(context);
 
         socketСlient = createSocket(baseUrl, token);
 
@@ -53,6 +50,13 @@ public class SocketManager {
             }
         });
 
+        socketСlient.on("authenticate", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.i(LOG_TAG, "authenticate");
+            }
+        });
+
         socketСlient.connect();
     }
 
@@ -61,6 +65,7 @@ public class SocketManager {
      * @return new socket instance
      */
     Socket createSocket(String baseUrl, String token){
+        /**
         JSONObject params = new JSONObject();
         try {
             params.put("token", token);
@@ -76,13 +81,28 @@ public class SocketManager {
             throw new RuntimeException(e);
         }
         return client;
+         */
+
+
+
+
+        return null;
     }
+    
 
     private Emitter.Listener onConnect = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             int N = 20;
             Log.i(LOG_TAG, "onConnect ");
+            socketСlient.emit("getMyInfo", onMyInfo);
+        }
+    };
+
+    private Emitter.Listener onMyInfo = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            Log.i(LOG_TAG, "onMyInfo");
         }
     };
 
@@ -96,7 +116,7 @@ public class SocketManager {
 
     public void testConnection(){
         String token = LoginManager.getToken(context);
-
+        connect();
     }
 
 

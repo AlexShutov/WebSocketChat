@@ -13,6 +13,6 @@ import rx.Observable;
  */
 public interface LoginApi {
 
-    @POST("login")
+    @POST("api/login")
     Observable<String> login(@Body LoginData loginParam);
 }
