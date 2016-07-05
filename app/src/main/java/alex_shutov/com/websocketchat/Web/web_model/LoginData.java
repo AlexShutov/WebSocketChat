@@ -1,4 +1,4 @@
-package alex_shutov.com.websocketchat.Web;
+package alex_shutov.com.websocketchat.web.web_model;
 
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;

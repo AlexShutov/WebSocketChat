@@ -1,10 +1,7 @@
-package alex_shutov.com.websocketchat.Web;
+package alex_shutov.com.websocketchat.web.api;
 
-import retrofit2.Response;
+import alex_shutov.com.websocketchat.web.web_model.LoginData;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.HEAD;
-import retrofit2.http.Header;
 import retrofit2.http.POST;
 import rx.Observable;
 

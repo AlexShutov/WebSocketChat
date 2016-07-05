@@ -1,9 +1,7 @@
-package alex_shutov.com.websocketchat.Web;
+package alex_shutov.com.websocketchat.web.api_impl;
 
 import android.content.Context;
-import android.util.EventLog;
 import android.util.Log;
-import android.util.Printer;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,6 +56,8 @@ public class SocketManager {
             }
         });
 
+        socketСlient.on("authorized", onAuthorized);
+
         socketСlient.connect();
     }
 
@@ -81,16 +81,25 @@ public class SocketManager {
             throw new RuntimeException(e);
         }
         return client;
-
     }
-    
+
+    private Emitter.Listener onAuthorized = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            Object o = null;
+            if (null != args && args.length > 0){
+                o = args[0];
+            }
+            Log.i(LOG_TAG, "on authorized");
+        }
+    };
 
     private Emitter.Listener onConnect = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             int N = 20;
             Log.i(LOG_TAG, "onConnect ");
-            socketСlient.emit("getMyInfo", "EufnYTZAuc");
+            socketСlient.emit("getMyInfo", "rom ");
         }
     };
 

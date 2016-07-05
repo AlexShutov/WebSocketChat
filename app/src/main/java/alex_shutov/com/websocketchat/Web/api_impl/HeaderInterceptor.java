@@ -1,4 +1,4 @@
-package alex_shutov.com.websocketchat.Web;
+package alex_shutov.com.websocketchat.web.api_impl;
 
 import android.util.Log;
 
