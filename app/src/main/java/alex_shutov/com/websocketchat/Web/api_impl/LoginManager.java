@@ -66,7 +66,7 @@ public class LoginManager {
         LoginApi loginApi = retrofit.create(LoginApi.class);
 
         Observable<Boolean> loginResult =
-        loginApi.login(loginData)
+        loginApi.login("application/json",loginData)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .map(r -> {
@@ -94,17 +94,13 @@ public class LoginManager {
      * @return
      */
     private Retrofit createRetrofitInstance(){
-        /** create interceptor to add header */
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(new HeaderInterceptor())
-                .build();
         /** Token is returned as just string, not Json, so use converter in lenient mode */
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getChatServerURL())
-                .client(client)
+                .client(new OkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();

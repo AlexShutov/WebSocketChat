@@ -2,6 +2,8 @@ package alex_shutov.com.websocketchat.web.api;
 
 import alex_shutov.com.websocketchat.web.web_model.LoginData;
 import retrofit2.http.Body;
+import retrofit2.http.HEAD;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import rx.Observable;
 
@@ -11,5 +13,6 @@ import rx.Observable;
 public interface LoginApi {
 
     @POST("api/login")
-    Observable<String> login(@Body LoginData loginParam);
+    Observable<String> login( @Header("Content-Type") String contentType,
+                              @Body LoginData loginParam);
 }

@@ -72,7 +72,7 @@ public class AllUsersFetcher {
             setToken(token);
         }
         Observable<List<User>> allUsersTask =
-        api.getAllUsers()
+        api.getAllUsers("application/json", getToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.computation())
                 .map(v -> {
@@ -94,7 +94,7 @@ public class AllUsersFetcher {
             setToken(token);
         }
         Observable<String> allUsersTask =
-                api.getAllUsersNotParsed()
+                api.getAllUsersNotParsed("application/json", "JWT " + getToken())
                         .subscribeOn(Schedulers.io())
                         .observeOn(Schedulers.computation());
 
@@ -104,6 +104,10 @@ public class AllUsersFetcher {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getToken() {
+        return token;
     }
 
     private String getChatServerURL(){
@@ -124,11 +128,6 @@ public class AllUsersFetcher {
     // TODO: move to base class, define only interceptor here
     private Retrofit createRetrofitInstance(){
 
-
-        /** create interceptor to add header */
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(createHeaderInterceptor())
-                .build();
         /** Token is returned as just string, not Json, so use converter in lenient mode
          * We could possibly use only one GSON for all thread, but not sure, if it is
          * thread safe
@@ -138,7 +137,6 @@ public class AllUsersFetcher {
                 .create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getChatServerURL())
-                .client(client)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();

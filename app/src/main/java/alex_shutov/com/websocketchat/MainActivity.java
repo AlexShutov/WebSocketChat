@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(r -> {
                     Log.i(LOG_TAG, "Response: " + r);
+                }, t -> {
+                    t.printStackTrace();
                 });
 
     }
