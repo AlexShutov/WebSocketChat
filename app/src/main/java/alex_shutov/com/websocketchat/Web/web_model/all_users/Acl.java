@@ -11,7 +11,9 @@ public class Acl {
     @SerializedName("sZbHjor6HK")
     @Expose
     private SZbHjor6HK sZbHjor6HK;
-
+    @SerializedName("asterisk")
+    @Expose
+    private Asterisk asterisk;
 
     /**
      * 
@@ -31,5 +33,22 @@ public class Acl {
         this.sZbHjor6HK = sZbHjor6HK;
     }
 
+    /**
+     * 
+     * @return
+     *     The asterisk
+     */
+    public Asterisk getAsterisk() {
+        return asterisk;
+    }
+
+    /**
+     * 
+     * @param asterisk
+     *     The asterisk
+     */
+    public void setAsterisk(Asterisk asterisk) {
+        this.asterisk = asterisk;
+    }
 
 }

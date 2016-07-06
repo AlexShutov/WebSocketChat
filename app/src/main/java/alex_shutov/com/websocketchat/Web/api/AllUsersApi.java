@@ -1,6 +1,7 @@
 package alex_shutov.com.websocketchat.web.api;
 
 import alex_shutov.com.websocketchat.web.web_model.all_users.AllUsersResponse;
+import okhttp3.ResponseBody;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import rx.Observable;
@@ -19,7 +20,7 @@ public interface AllUsersApi {
                                              @Header("Authorization") String jwtToken);
 
     @POST("/api/allUsers")
-    Observable<String> getAllUsersNotParsed(@Header("Content-Type") String contentType,
-                                            @Header("Authorization") String jwtToken);
+    Observable<ResponseBody> getAllUsersNotParsed(@Header("Content-Type") String contentType,
+                                                  @Header("Authorization") String jwtToken);
 
 }

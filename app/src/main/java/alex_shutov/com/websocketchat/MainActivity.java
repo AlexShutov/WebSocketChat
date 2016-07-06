@@ -6,10 +6,17 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import java.io.IOException;
+import java.util.List;
+
 import alex_shutov.com.websocketchat.web.api_impl.AllUsersFetcher;
 import alex_shutov.com.websocketchat.web.api_impl.LoginManager;
 import alex_shutov.com.websocketchat.web.api_impl.SocketManager;
 import alex_shutov.com.websocketchat.web.web_model.LoginData;
+import alex_shutov.com.websocketchat.web.web_model.all_users.AllUsersResponse;
+import alex_shutov.com.websocketchat.web.web_model.all_users.User;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -19,6 +26,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     ChatApplication app;
+
+    private void showToast(String msg){
+        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT)
+                .show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
         lm.login()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(res -> {
-                    Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_SHORT)
-                            .show();
+                    String msg = res ? "Login successful" : "Login failed";
+                    showToast(msg);
                 });
     }
 
@@ -64,27 +76,20 @@ public class MainActivity extends AppCompatActivity {
     void testAllUsers(){
         AllUsersFetcher allUsersFetcher = app.getAllUsersFetcher();
         String token = LoginManager.getToken(this);
-        allUsersFetcher.setToken(token);
 
-        /**
+
         allUsersFetcher.getAllusers(token)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(users -> {
-                    if (null != users && !users.isEmpty()){
-                        Log.i(LOG_TAG, "Users: " + users.size());
+                .subscribe(resp -> {
+                    List<User> users = null;
+                    if (null != resp){
+                        users = resp.getUsers();
+                        showToast("There are " + users.size() + " known users");
                     }
+
                 }, t -> {
                     t.printStackTrace();
                     Log.i(LOG_TAG, "Error: " + t.getMessage());
-                });
-         */
-
-        allUsersFetcher.getAllusersNotParsed(null)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(r -> {
-                    Log.i(LOG_TAG, "Response: " + r);
-                }, t -> {
-                    t.printStackTrace();
                 });
 
     }
